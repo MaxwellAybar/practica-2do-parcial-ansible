@@ -1,0 +1,42 @@
+---
+- name: Practica 2do Parcial - Administracion de Servidores con Ansible
+  hosts: docker
+  gather_facts: yes
+
+  tasks:
+    - name: 1. Mostrar el nombre del host
+      debug:
+        msg: "El nombre del host es: {{ inventory_hostname }}"
+
+    - name: 2. Mostrar el sistema operativo
+      debug:
+        msg: "El sistema operativo es: {{ ansible_distribution }} {{ ansible_distribution_version }}"
+
+    - name: 3. Crear el directorio /tmp/ansible-demo
+      file:
+        path: /tmp/ansible-demo
+        state: directory
+        mode: '0755'
+
+    - name: 4 y 5. Crear archivo info.txt y escribir nombre del servidor y SO
+      copy:
+        dest: /tmp/ansible-demo/info.txt
+        content: |
+          Servidor: {{ inventory_hostname }}
+          Sistema Operativo: {{ ansible_distribution }} {{ ansible_distribution_version }}
+        mode: '0644'
+
+    - name: 6. Crear los directorios logs, backup y config mediante un loop
+      file:
+        path: "/tmp/ansible-demo/{{ item }}"
+        state: directory
+        mode: '0755'
+      loop:
+        - logs
+        - backup
+        - config
+
+    - name: 7. Mostrar un mensaje únicamente cuando el sistema operativo sea Ubuntu
+      debug:
+        msg: "Este servidor corre sobre Ubuntu!"
+      when: ansible_distribution == "Ubuntu"
