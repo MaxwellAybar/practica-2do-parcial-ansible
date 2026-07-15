@@ -61,4 +61,4 @@ El playbook realiza las siguientes tareas:
 
 ## Captura
 
-<img width="1902" alt="Screenshot 2026-07-14 200953" src="https://github.com/user-attachments/assets/726e02af-043b-4095-a9ad-9320b7f06817" />
+![Ejecución exitosa del playbook](Captura.png)
